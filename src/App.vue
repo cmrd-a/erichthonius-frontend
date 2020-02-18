@@ -24,7 +24,7 @@
             fill-height
         >
           <v-layout>
-            <v-flex shrink>
+            <v-flex>
               <router-view/>
             </v-flex>
           </v-layout>

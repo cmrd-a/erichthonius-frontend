@@ -36,6 +36,7 @@ const actions = {
   set_dl_id: async (context, payload) => {
     let {data} = await axios.get('/files/download');
     context.commit('set_dl_id', data.task_id);
+    context.commit('set_dl_state', "STARTED");
   },
   set_dl_state: async (context, payload) => {
     let {data} = await axios.get('/task_status/' + state.dl_task_id);

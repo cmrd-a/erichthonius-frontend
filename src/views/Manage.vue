@@ -1,14 +1,29 @@
 <template>
   <div>
     <h1>Управление</h1>
-    <v-btn
-        :loading="loading"
-        :disabled="loading"
-        color="primary"
-        @click="progress_loop"
-    >
-      Скачать файлы
-    </v-btn>
+    <v-row align="center">
+      <v-col>
+        <v-btn
+            :loading="loading"
+            :disabled="loading"
+            color="primary"
+            @click="progress_loop"
+        >
+          Скачать файлы
+        </v-btn>
+      </v-col>
+      <v-col>
+        <v-btn
+            :loading="loading"
+            :disabled="loading"
+            color="primary"
+            @click=""
+        >
+          Опознать файлы
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-spacer></v-spacer>
     <v-progress-linear
         :active="loading"
         :value="dl_task_percent"
@@ -36,15 +51,11 @@
 
       progress_loop: async function () {
         await this.set_dl_id();
-        await this.set_dl_state();
-        let current_state = this.dl_task_state
-        while (current_state === 'PROGRESS') {
+        while (this.dl_task_state === 'PROGRESS' || this.dl_task_state === 'STARTED') {
           await this.set_dl_state();
-          current_state = this.dl_task_state
           await this.sleep(1000);
         }
       },
-
     },
     computed: {
       ...mapGetters([
@@ -54,13 +65,9 @@
         'dl_task_percent'
       ]),
       loading() {
-        return this.dl_task_state === 'PROGRESS';
+        return this.dl_task_state === 'PROGRESS' || this.dl_task_state === 'STARTED';
       }
-
-
-    }
-    ,
-
+    },
   }
 </script>
 
